@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './App.css';
 import Result from './components/Result.js';
 
@@ -7,7 +7,9 @@ function App() {
   
   const [query,setQuery]  = useState("");
   const [num_results,setNumresults] = useState("5");
-  const [results,setResults] = useState([]);
+  const [results,setResults] = useState(null);
+
+
 
   const search = async () =>{
       // console.log(query);
@@ -17,11 +19,15 @@ function App() {
   fetch(url)
      .then(response => response.json())
      .then(data => {
-      setResults(data.items);
-     console.log(data); 
+      setResults(data);
+    //  console.log(data); 
    })
   .catch(error => console.error(error));
   }
+ 
+  useEffect(() => {
+    setQuery("");
+  }, []);
 
 
   return (
@@ -40,7 +46,10 @@ function App() {
 
           </input>
       <button onClick={search}> Search </button>
-      <Result {...results}/>
+      
+      {results && <Result {...results}/>}
+
+      
     </div>
     
   );
