@@ -47,7 +47,14 @@ function App() {
           </input>
       <button onClick={search}> Search </button>
       
-      {results && <Result {...results}/>}
+      {results &&
+      <div>
+        <div>
+        <button >Download</button>
+        </div>
+        <Result {...results}/>
+      </div>
+      }
 
       
     </div>
