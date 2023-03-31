@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState,useEffect } from 'react';
 
 function result(props) {
   
@@ -11,7 +10,7 @@ function result(props) {
     <div key={item.cacheId}>
       <h3>{item.title}</h3>
       <p>{item.snippet}</p>
-      <a href={item.link} target="_blank">Link-{item.link}</a>
+      <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
     </div>
   ));
 
