@@ -33,21 +33,33 @@ function App() {
   return (
     <div className="App">
      <h1>Web Crawler</h1>
-          <input onChange={(e)=>{
+        
+        <div className='fields'> 
+            <input placeholder='Search Something ??' onChange={(e)=>{
               setQuery(e.target.value)
             }} 
             type={"text"}>
 
           </input>
-          <input onChange={(e)=>{
+          <input placeholder='Enter number of results ' onChange={(e)=>{
               setNumresults(e.target.value)
             }} 
             type={"number"}>
 
           </input>
-      <button onClick={search}> Search </button>
+        </div>  
       
-      {results && <Result {...results}/>}
+      <button className="btn" onClick={search}> Search </button>
+      
+      
+      {results &&
+              <div>
+                  <div>
+                  <button className="btn">Download</button>
+                  </div>
+                  <Result {...results}/>
+              </div>
+      }
 
       
     </div>
