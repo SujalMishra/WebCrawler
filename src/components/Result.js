@@ -8,9 +8,10 @@ function result(props) {
   
   const itemscom = props.items.map(item => (
     <div key={item.cacheId}>
-      <h3>{item.title}</h3>
-      <p>{item.snippet}</p>
-      <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
+        <h3>{item.title}</h3>
+        <p>{item.snippet}</p>
+        <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
+        <button>Scrape this website</button>
     </div>
   ));
 
