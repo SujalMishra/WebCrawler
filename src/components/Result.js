@@ -1,22 +1,26 @@
 import React from 'react'
+// import Select from 'react-select';
+import { useState } from 'react';
 
-// import axios from 'axios';
+const options = [
+  // {value: '',label: 'select'},
+  { value: 'a', label: 'Links' },
+  { value: 'img', label: 'Images' },
+  { value: 'h', label: 'Headings' }
+]
 
-function result(props) {
-  
+function Result(props) {
+  const [tag,setTag]=useState("");
+
   if (!props.items) {
     return <div>Loading...</div>;
   }
 
+    
 
-    const handleButtonClick= async (myurl) => {
-      // const r=axios.post('http://localhost:4000/api/',{myurl:myurl}
-      // ).catch(e => {
-      //   console.log(e);
-      // });
-      // console.log(r);
+    const handleButtonClick= async (myurl) => {      
       
-      const link={myurl: myurl};
+      const link={myurl: myurl,tag: tag};
       const response = await fetch('http://localhost:4000/api/', {
         method: 'POST',
         body: JSON.stringify(link),
@@ -29,7 +33,7 @@ function result(props) {
       });
 
       const json=await response.json();
-      const text=json.links;
+      const text=json.data;
       // console.log(text);
 
       const element = document.createElement('a');
@@ -38,14 +42,29 @@ function result(props) {
       element.download = 'scraped.txt';
       document.body.appendChild(element);
       element.click();
+
     }
+
+    const handleChange = event => {
+      // console.log(event.target.value);
+      setTag(event.target.value);
+    };
   
   const itemscom = props.items.map(item => (
     <div key={item.cacheId}>
       <h3>{item.title}</h3>
       <p>{item.snippet}</p>
       <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
-      <button onClick={() => {handleButtonClick(item.link)} }>Scrape</button>
+      <div>
+      <select value={tag}  onChange={handleChange}>
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+        <button onClick={() => {handleButtonClick(item.link)} }>Scrape</button>        
+      </div>
     </div>
   ));
 
@@ -57,4 +76,4 @@ function result(props) {
   
 }
 
-export default result
+export default Result
