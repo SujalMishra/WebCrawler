@@ -2,6 +2,8 @@ import { useState,useEffect } from 'react';
 import './App.css';
 import Result from './components/Result.js';
 
+import NavBar from './components/Navbar';
+
 
 function App() {
   
@@ -31,17 +33,19 @@ function App() {
 
 
   return (
-    <div className="App">
-     <h1>Web Crawler</h1>
+    <div>
+      <NavBar />
+      <div className="App">
+      <h1>Web Crawler</h1>
         
         <div className='fields'> 
-            <input placeholder='Search Something ??' onChange={(e)=>{
+            <input placeholder='Search Something ??' id='search' onChange={(e)=>{
               setQuery(e.target.value)
             }} 
             type={"text"}>
 
           </input>
-          <input placeholder='Enter number of results ' onChange={(e)=>{
+          <input placeholder='number' id='num' onChange={(e)=>{
               setNumresults(e.target.value)
             }} 
             type={"number"}>
@@ -60,6 +64,8 @@ function App() {
                   <Result {...results}/>
               </div>
       }
+      </div>
+     
 
       
     </div>
