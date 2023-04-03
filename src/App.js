@@ -55,7 +55,7 @@ function App() {
       {results &&
               <div>
                   <div>
-                  <button className="btn">Download</button>
+                  {/* <button className="btn">Download</button> */}
                   </div>
                   <Result {...results}/>
               </div>
