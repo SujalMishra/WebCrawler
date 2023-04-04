@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 
+import Accordion from 'react-bootstrap/Accordion';
+
 const options = [
   { value: 'a', label: 'Links' },
   { value: 'img', label: 'Images' },
@@ -75,23 +77,31 @@ function Result(props) {
   }
 
   const itemscom = props.items.map(item => (
-    <div key={item.cacheId}>
-      <h3>{item.title}</h3>
-      <p>{item.snippet}</p>
-      <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
-      <div>
-        <select value={tag} onChange={handleChange}>
-          {options.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <button onClick={() => { handleButtonClick(item.link) }}>Scrape</button>
-      </div>
-      <div>
-        <button onClick={ScrImg}>Scrape images</button>
-      </div>
+
+    <div key={item.cacheId} className="res">
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>{item.title}</Accordion.Header>
+          <Accordion.Body>
+            
+            <p>{item.snippet}</p>
+            <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
+            <div>
+              <select value={tag} onChange={handleChange}>
+                {options.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <button onClick={() => { handleButtonClick(item.link) }}>Scrape</button>
+            </div>
+            <div>
+              <button onClick={ScrImg}>Scrape images</button>
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </div>
   ));
 
