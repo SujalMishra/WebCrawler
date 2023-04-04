@@ -53,7 +53,7 @@ function App() {
           </input>
         </div>  
       
-      <button className="btn" onClick={search}> Search </button>
+      <button className="btns" onClick={search}> Search </button>
       
       
       {results &&
