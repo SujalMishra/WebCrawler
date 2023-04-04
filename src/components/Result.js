@@ -2,8 +2,10 @@ import React from 'react'
 import { useState } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
+import { Button } from 'react-bootstrap';
 
 const options = [
+  {value: '', label: 'Select'},
   { value: 'a', label: 'Links' },
   { value: 'img', label: 'Images' },
   { value: 'h', label: 'Headings' }
@@ -80,12 +82,12 @@ function Result(props) {
 
     <div key={item.cacheId} className="res">
       <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="1">
+        <Accordion.Item eventKey="1" className='bxx'>
           <Accordion.Header>{item.title}</Accordion.Header>
           <Accordion.Body>
             
             <p>{item.snippet}</p>
-            <a href={item.link} target="_blank" rel="noreferrer">Link-{item.link}</a>
+            <a href={item.link} target="_blank" rel="noreferrer">Crawl</a>
             <div>
               <select value={tag} onChange={handleChange}>
                 {options.map(option => (
@@ -97,7 +99,7 @@ function Result(props) {
               <button onClick={() => { handleButtonClick(item.link) }}>Scrape</button>
             </div>
             <div>
-              <button onClick={ScrImg}>Scrape images</button>
+              <Button onClick={ScrImg} variant="outline-dark">Scrape images</Button>
             </div>
           </Accordion.Body>
         </Accordion.Item>
