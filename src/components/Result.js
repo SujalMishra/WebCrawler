@@ -78,7 +78,7 @@ function Result(props) {
 
   const itemscom = props.items.map(item => (
 
-    <div key={item.cacheId}>
+    <div key={item.cacheId} className="res">
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="1">
           <Accordion.Header>{item.title}</Accordion.Header>
