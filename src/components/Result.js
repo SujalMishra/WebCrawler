@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 
 const options = [
   {value: '', label: 'Select'},
@@ -52,31 +52,31 @@ function Result(props) {
     setTag(event.target.value);
   };
 
-  const ScrImg = async (myurl) => {
-    const link = { myurl: myurl };
-    const response = await fetch('http://localhost:4000/api/ocr', {
-      method: 'POST',
-      body: JSON.stringify(link),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .catch(e => {
-        console.log(e);
-      });
-    // console.log(response);
+  // const ScrImg = async (myurl) => {
+  //   const link = { myurl: myurl };
+  //   const response = await fetch('http://localhost:4000/api/ocr', {
+  //     method: 'POST',
+  //     body: JSON.stringify(link),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  //   // console.log(response);
 
-    const json = await response.json();
-    const text = json.data;
-    // console.log(text);
+  //   const json = await response.json();
+  //   const text = json.data;
+  //   // console.log(text);
 
-    const element = document.createElement('a');
-    const file = new Blob([text.join('\n')], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'scraped.txt';
-    document.body.appendChild(element);
-    element.click();
-  }
+  //   const element = document.createElement('a');
+  //   const file = new Blob([text.join('\n')], { type: 'text/plain' });
+  //   element.href = URL.createObjectURL(file);
+  //   element.download = 'scraped.txt';
+  //   document.body.appendChild(element);
+  //   element.click();
+  // }
 
   const itemscom = props.items.map(item => (
 
@@ -98,9 +98,9 @@ function Result(props) {
               </select>
               <button onClick={() => { handleButtonClick(item.link) }}>Scrape</button>
             </div>
-            <div>
+            {/* <div>
               <Button onClick={ScrImg} variant="outline-dark">Scrape images</Button>
-            </div>
+            </div> */}
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
