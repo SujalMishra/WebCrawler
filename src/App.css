@@ -104,6 +104,7 @@ h1{
   border: black;
 }
 
-.nav.navbar-nav.navbar-right li a {
-  color: blue;
+.navtxt {
+  font-weight: bolder;
+  color: #0ec511;
 }
