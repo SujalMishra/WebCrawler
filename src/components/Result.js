@@ -23,7 +23,7 @@ function Result(props) {
   const handleButtonClick = async (myurl) => {
 
     const link = { myurl: myurl, tag: tag };
-    const response = await fetch('http://localhost:4000/api/', {
+    const response = await fetch('https://web-scraper-api-few1.onrender.com/api/', {
       method: 'POST',
       body: JSON.stringify(link),
       headers: {
