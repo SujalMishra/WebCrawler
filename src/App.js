@@ -4,6 +4,8 @@ import Result from './components/Result.js';
 
 import NavBar from './components/Navbar';
 
+import { Button } from 'react-bootstrap';
+
 
 function App() {
   
@@ -53,7 +55,7 @@ function App() {
           </input>
         </div>  
       
-      <button className="btns" onClick={search}> Search </button>
+      <Button variant="outline-light" id='some' onClick={search}> Search </Button>
       
       
       {results &&
