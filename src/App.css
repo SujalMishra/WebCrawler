@@ -103,3 +103,7 @@ h1{
   box-shadow: rgb(0, 0, 0);
   border: black;
 }
+
+.nav.navbar-nav.navbar-right li a {
+  color: blue;
+}
