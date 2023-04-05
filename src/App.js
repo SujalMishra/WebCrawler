@@ -36,7 +36,7 @@ function App() {
     <div>
       <NavBar />
       <div className="App">
-      <h1>Web Crawler</h1>
+      <h1>DataDigger</h1>
         
         <div className='fields'> 
             <input placeholder='Search Something ??' id='search' onChange={(e)=>{
