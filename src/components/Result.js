@@ -7,13 +7,6 @@ import Accordion from 'react-bootstrap/Accordion';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
-// const options = [
-//   { value: '', label: 'Select' },
-//   { value: 'a', label: 'Links' },
-//   { value: 'img', label: 'Images' },
-//   { value: 'h', label: 'Headings' }
-// ]
-
 function Result(props) {
 
   const [link, setlink] = useState(false);
@@ -32,6 +25,8 @@ function Result(props) {
 
   const handleButtonClick = async (myurl) => {
 
+    
+
     const linkBody = { myurl: myurl };
 
     if (img) {
@@ -48,7 +43,10 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
+      console.log(text);
       setimgsList(text);
+    } else {
+      setimgsList([]);
     }
 
     if (link) {
@@ -65,7 +63,10 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
+      console.log(text);
       setlinksList(text);
+    } else {
+      setlinksList([]);
     }
 
     if (head) {
@@ -82,10 +83,15 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
+      console.log(text);
       setheadsList(text);
+    } else {
+      setheadsList([]);
     }
 
     const files = [];
+
+    console.log(link,img,head,linksList,imgsList,headsList)
 
     if(imgsList.length) {
       files.push({name: "images.txt",data: imgsList.join('\n')});
@@ -104,6 +110,27 @@ function Result(props) {
     files.forEach(file => {
       zip.file(file.name,file.data);
     });
+
+    if(linksList.length) {
+      const folder = zip.folder("level2");
+      const urlL2=linksList[0];
+      const response = await fetch('http://localhost:4000/api/links', {
+        method: 'POST',
+        body: JSON.stringify({myurl: urlL2}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .catch(e => {
+          console.log(e);
+        });
+
+      const json = await response.json();
+      const text = json.data;
+      if(text.length) {
+        folder.file("scrapedl2.txt",text.join('\n'));
+      }
+    }
 
     zip.generateAsync({ type: "blob" }).then(content => {
       FileSaver.saveAs(content, "scraped.zip");
