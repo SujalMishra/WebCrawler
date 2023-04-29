@@ -29,8 +29,9 @@ function Result(props) {
 
     const linkBody = { myurl: myurl };
 
+    const imgList2=[];
     if (img) {
-      const response = await fetch('http://localhost:4000/api/img', {
+      const response = await fetch('/api/img', {
         method: 'POST',
         body: JSON.stringify(linkBody),
         headers: {
@@ -43,14 +44,18 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
-      console.log(text);
+      for(let i = 0; i < text.length; i++) {
+        imgList2.push(text[i]);
+      }
+      // console.log(text);
       setimgsList(text);
     } else {
       setimgsList([]);
     }
 
+    const linkList2=[];
     if (link) {
-      const response = await fetch('http://localhost:4000/api/links', {
+      const response = await fetch('/api/links', {
         method: 'POST',
         body: JSON.stringify(linkBody),
         headers: {
@@ -63,14 +68,18 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
-      console.log(text);
+      for(let i = 0; i < text.length; i++) {
+        linkList2.push(text[i]);
+      }
+      // console.log(text);
       setlinksList(text);
     } else {
       setlinksList([]);
     }
 
+    const headList2=[];
     if (head) {
-      const response = await fetch('http://localhost:4000/api/head', {
+      const response = await fetch('/api/head', {
         method: 'POST',
         body: JSON.stringify(linkBody),
         headers: {
@@ -83,7 +92,10 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
-      console.log(text);
+      for(let i = 0; i < text.length; i++) {
+        headList2.push(text[i]);
+      }
+      // console.log(text);
       setheadsList(text);
     } else {
       setheadsList([]);
@@ -91,17 +103,17 @@ function Result(props) {
 
     const files = [];
 
-    console.log(link,img,head,linksList,imgsList,headsList)
+    console.log(link,img,head,linkList2,imgList2,headList2);
 
-    if(imgsList.length) {
+    if(imgList2.length) {
       files.push({name: "images.txt",data: imgsList.join('\n')});
     }
 
-    if(linksList.length) {
+    if(linkList2.length) {
       files.push({name: "links.txt",data: linksList.join('\n')});
     }
 
-    if(headsList.length) {
+    if(headList2.length) {
       files.push({name: "headings.txt",data: headsList.join('\n')});
     }
 
@@ -111,7 +123,7 @@ function Result(props) {
       zip.file(file.name,file.data);
     });
 
-    if(linksList.length) {
+    if(linkList2.length) {
       const folder = zip.folder("level2");
       const urlL2=linksList[0];
       const response = await fetch('http://localhost:4000/api/links', {
@@ -170,4 +182,4 @@ function Result(props) {
 
 }
 
-export default Result
+export default Result;

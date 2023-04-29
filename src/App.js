@@ -57,9 +57,11 @@ function App() {
 
         <Button variant="outline-light" id='some' onClick={search}> Search </Button>
 
-
         {results &&
+          
           <div>
+            <Button variant='outline-dark'>Scrape All</Button>
+
             <div>
               {/* <button className="btn">Download</button> */}
             </div>
