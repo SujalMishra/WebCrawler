@@ -1,7 +1,7 @@
 {
   "name": "webcrawler",
   "version": "0.1.0",
-  "proxy": "http://localhost:4000",
+  "proxy": "https://web-scraper-api-few1.onrender.com",
   "homepage": "http://localhost:3000",
   "private": true,
   "dependencies": {

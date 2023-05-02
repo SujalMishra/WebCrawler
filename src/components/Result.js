@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
-// import { Button } from 'react-bootstrap';
 
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
@@ -13,9 +12,6 @@ function Result(props) {
   const [img, setimg] = useState(false);
   const [head, sethead] = useState(false);
 
-  const [linksList, setlinksList] = useState([]);
-  const [imgsList, setimgsList] = useState([]);
-  const [headsList, setheadsList] = useState([]);
 
   if (!props.items) {
     return <div>Loading...</div>;
@@ -24,8 +20,6 @@ function Result(props) {
 
 
   const handleButtonClick = async (myurl) => {
-
-    
 
     const linkBody = { myurl: myurl };
 
@@ -48,9 +42,7 @@ function Result(props) {
         imgList2.push(text[i]);
       }
       // console.log(text);
-      setimgsList(text);
-    } else {
-      setimgsList([]);
+      
     }
 
     const linkList2=[];
@@ -72,9 +64,6 @@ function Result(props) {
         linkList2.push(text[i]);
       }
       // console.log(text);
-      setlinksList(text);
-    } else {
-      setlinksList([]);
     }
 
     const headList2=[];
@@ -96,25 +85,22 @@ function Result(props) {
         headList2.push(text[i]);
       }
       // console.log(text);
-      setheadsList(text);
-    } else {
-      setheadsList([]);
     }
 
     const files = [];
 
-    console.log(link,img,head,linkList2,imgList2,headList2);
+    // console.log(link,img,head,linkList2,imgList2,headList2);
 
     if(imgList2.length) {
-      files.push({name: "images.txt",data: imgsList.join('\n')});
+      files.push({name: "images.txt",data: imgList2.join('\n')});
     }
 
     if(linkList2.length) {
-      files.push({name: "links.txt",data: linksList.join('\n')});
+      files.push({name: "links.txt",data: linkList2.join('\n')});
     }
 
     if(headList2.length) {
-      files.push({name: "headings.txt",data: headsList.join('\n')});
+      files.push({name: "headings.txt",data: headList2.join('\n')});
     }
 
     const zip = new JSZip();
@@ -125,8 +111,8 @@ function Result(props) {
 
     if(linkList2.length) {
       const folder = zip.folder("level2");
-      const urlL2=linksList[0];
-      const response = await fetch('http://localhost:4000/api/links', {
+      const urlL2=linkList2[0];
+      const response = await fetch('/api/links', {
         method: 'POST',
         body: JSON.stringify({myurl: urlL2}),
         headers: {
