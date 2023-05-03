@@ -2,17 +2,9 @@ import React from 'react'
 import { useState } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
-// import { Button } from 'react-bootstrap';
 
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
-
-// const options = [
-//   { value: '', label: 'Select' },
-//   { value: 'a', label: 'Links' },
-//   { value: 'img', label: 'Images' },
-//   { value: 'h', label: 'Headings' }
-// ]
 
 function Result(props) {
 
@@ -20,9 +12,6 @@ function Result(props) {
   const [img, setimg] = useState(false);
   const [head, sethead] = useState(false);
 
-  const [linksList, setlinksList] = useState([]);
-  const [imgsList, setimgsList] = useState([]);
-  const [headsList, setheadsList] = useState([]);
 
   if (!props.items) {
     return <div>Loading...</div>;
@@ -34,8 +23,9 @@ function Result(props) {
 
     const linkBody = { myurl: myurl };
 
+    const imgList2=[];
     if (img) {
-      const response = await fetch('http://localhost:4000/api/img', {
+      const response = await fetch('/api/img', {
         method: 'POST',
         body: JSON.stringify(linkBody),
         headers: {
@@ -48,11 +38,16 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
-      setimgsList(text);
+      for(let i = 0; i < text.length; i++) {
+        imgList2.push(text[i]);
+      }
+      // console.log(text);
+      
     }
 
+    const linkList2=[];
     if (link) {
-      const response = await fetch('http://localhost:4000/api/links', {
+      const response = await fetch('/api/links', {
         method: 'POST',
         body: JSON.stringify(linkBody),
         headers: {
@@ -65,11 +60,15 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
-      setlinksList(text);
+      for(let i = 0; i < text.length; i++) {
+        linkList2.push(text[i]);
+      }
+      // console.log(text);
     }
 
+    const headList2=[];
     if (head) {
-      const response = await fetch('http://localhost:4000/api/head', {
+      const response = await fetch('/api/head', {
         method: 'POST',
         body: JSON.stringify(linkBody),
         headers: {
@@ -82,21 +81,26 @@ function Result(props) {
 
       const json = await response.json();
       const text = json.data;
-      setheadsList(text);
+      for(let i = 0; i < text.length; i++) {
+        headList2.push(text[i]);
+      }
+      // console.log(text);
     }
 
     const files = [];
 
-    if(imgsList.length) {
-      files.push({name: "images.txt",data: imgsList.join('\n')});
+    // console.log(link,img,head,linkList2,imgList2,headList2);
+
+    if(imgList2.length) {
+      files.push({name: "images.txt",data: imgList2.join('\n')});
     }
 
-    if(linksList.length) {
-      files.push({name: "links.txt",data: linksList.join('\n')});
+    if(linkList2.length) {
+      files.push({name: "links.txt",data: linkList2.join('\n')});
     }
 
-    if(headsList.length) {
-      files.push({name: "headings.txt",data: headsList.join('\n')});
+    if(headList2.length) {
+      files.push({name: "headings.txt",data: headList2.join('\n')});
     }
 
     const zip = new JSZip();
@@ -104,6 +108,27 @@ function Result(props) {
     files.forEach(file => {
       zip.file(file.name,file.data);
     });
+
+    if(linkList2.length) {
+      const folder = zip.folder("level2");
+      const urlL2=linkList2[0];
+      const response = await fetch('/api/links', {
+        method: 'POST',
+        body: JSON.stringify({myurl: urlL2}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .catch(e => {
+          console.log(e);
+        });
+
+      const json = await response.json();
+      const text = json.data;
+      if(text.length) {
+        folder.file("scrapedl2.txt",text.join('\n'));
+      }
+    }
 
     zip.generateAsync({ type: "blob" }).then(content => {
       FileSaver.saveAs(content, "scraped.zip");
@@ -143,4 +168,4 @@ function Result(props) {
 
 }
 
-export default Result
+export default Result;
